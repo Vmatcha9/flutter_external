@@ -1,0 +1,482 @@
+1.
+1a) installation
+1b) Write a simple Dart program to understand the language basics
+void main() {
+// Define three static numbers
+int num1 = 10;
+int num2 = 20;
+int num3 = 30;
+// Calculate the sum of the three numbers
+int sum = num1 + num2 + num3;
+// Print the result
+print('The sum of $num1, $num2, and $num3 is $sum.');
+}
+
+
+
+1c) Write a simple Flutter app to display “Hello World” in the middle of the screen.
+import 'package:flutter/material.dart';  // Flutter material package
+
+void main() {
+  runApp(MyApp());   // runApp() launches the Flutter app
+}
+
+class MyApp extends StatelessWidget {   // Stateless widget = UI doesn’t change
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(              // Root of the app
+      home: Scaffold(                // Gives app basic structure
+        body: Center(                // Center widget aligns content in middle
+          child: Text("Hello World"), // Text widget displays text
+        ),
+      ),
+    );
+  }
+}
+
+
+
+2.
+2a) Explore various Flutter widgets (Text, Image, Container, etc.).
+
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Column(   // Places items vertically
+          children: [
+            Text("This is Text Widget"),
+            Image.network("https://picsum.photos/100"), // Loads image from web
+            Container(  // Box with color & size
+              color: Colors.blue,
+              height: 50,
+              width: 100,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+2b) Implement different layout structures using Row, Column, and Stack widgets.
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Column(  // Vertical layout
+          children: [
+            Row(   // Horizontal layout
+              children: [
+                Text("A"),
+                Text("B"),
+                Text("C"),
+              ],
+            ),
+            Stack(   // Overlapping widgets
+              children: [
+                Container(height: 100, width: 100, color: Colors.red),
+                Container(height: 60, width: 60, color: Colors.green),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+3.
+3a) Design a responsive UI that adapts to different screen sizes
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: LayoutBuilder(   // Gives screen width & height
+          builder: (context, constraints) {
+            if (constraints.maxWidth < 600) {
+              return Center(child: Text("Small Screen"));
+            } else {
+              return Center(child: Text("Large Screen"));
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
+
+
+3b) Implement media queries and breakpoints for responsiveness.
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Builder(
+          builder: (context) {
+            double width = MediaQuery.of(context).size.width; // screen width
+            return Center(
+              child: Text(width < 600 ? "Mobile View" : "Tablet/Desktop View"),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+4.
+4a) Set up navigation between different screens using Navigator.
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) =>
+      MaterialApp(home: HomeScreen());
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) =>
+      Scaffold(
+        appBar: AppBar(title: Text("Home")),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => SecondScreen()),
+            ),
+            child: Text("Go to Second"),
+          ),
+        ),
+      );
+}
+
+class SecondScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) =>
+      Scaffold(
+        appBar: AppBar(title: Text("Second")),
+        body: Center(
+          child: ElevatedButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("Back"),
+          ),
+        ),
+      );
+}
+
+
+
+4 b) Implement navigation with named routes.
+import 'package:flutter/material.dart';
+void main() => runApp(MaterialApp(
+  initialRoute: '/',
+  routes: {
+    '/': (_) => Home(),
+    '/second': (_) => Second(),
+  },
+));
+
+class Home extends StatelessWidget {
+  @override
+  Widget build(BuildContext c) => Scaffold(
+    body: Center(
+      child: ElevatedButton(
+        onPressed: () => Navigator.pushNamed(c, '/second'),
+        child: Text("Next"),
+      ),
+    ),
+  );
+}
+
+class Second extends StatelessWidget {
+  @override
+  Widget build(BuildContext c) => Scaffold(
+    body: Center(
+      child: ElevatedButton(
+        onPressed: () => Navigator.pop(c),
+        child: Text("Back"),
+      ),
+    ),
+  );
+}
+
+
+
+5.
+5a) stateful
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+  class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+        home: Scaffold(
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [Text("One"), Text("Two")],
+            ),
+          ),
+        ),
+      );
+}
+
+(or)
+import 'package:flutter/material.dart';
+void main()=>runApp(MyApp());
+
+class MyApp extends StatefulWidget{
+  @override State<MyApp> createState()=>_State();
+}
+
+class _State extends State<MyApp>{
+  @override Widget build(BuildContext c)=>MaterialApp(
+    home:Column(children:[Text("1"),Text("2"),Text("3")]),
+  );
+}
+
+
+
+  stateless
+import 'package:flutter/material.dart';
+void main() => runApp(MyApp());
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(_) =>
+      MaterialApp(
+        home: Scaffold(
+          body: Center(child: Text("FDP")),
+        ),
+      );
+}
+
+
+5 b) Implement state management using set State and Provider.
+
+import 'package:flutter/material.dart';
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override State<MyApp> createState() => _State();
+}
+
+class _State extends State<MyApp> {
+  String value = "Test";
+
+  void change() => setState(() => value = "Test done");
+
+  @override
+  Widget build(BuildContext c) => MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(title: Text("setState Example")),
+      body: Center(child: Text(value)),
+      floatingActionButton:
+        FloatingActionButton(onPressed: change, child: Icon(Icons.add)),
+    ),
+  );
+}
+
+
+
+
+6.
+6 a) Create custom widgets for specific UI elements.
+ import 'package:flutter/material.dart';
+void main() => runApp(MaterialApp(home: Home()));
+
+class Home extends StatelessWidget {
+  @override
+  Widget build(_) =>
+      Scaffold(body: Center(child: IconTextButton(text: "Like", onTap: () {})));
+}
+
+class IconTextButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onTap;
+  const IconTextButton({required this.text, required this.onTap});
+
+  @override
+  Widget build(_) =>
+      ElevatedButton(onPressed: onTap, child: Text(text));
+}
+
+
+
+6 b) Apply styling using themes and custom styles.
+import 'package:flutter/material.dart';
+void main() => runApp(MaterialApp(home: Home()));
+
+class Home extends StatelessWidget {
+  @override
+  Widget build(_) =>
+      Scaffold(body: Center(child: IconTextButton(text: "Like", onTap: () {})));
+}
+
+class IconTextButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onTap;
+  const IconTextButton({required this.text, required this.onTap});
+
+  @override
+  Widget build(_) =>
+      ElevatedButton(
+        onPressed: onTap,
+        child: Text(text),
+        style: ElevatedButton.styleFrom(backgroundColor: Colors.pink), 
+      );
+}
+
+
+7.
+7a) Design a form with various input fields.
+import 'package:flutter/material.dart';
+void main() => runApp(MaterialApp(home: FormPage()));
+
+class FormPage extends StatelessWidget {
+  final n = TextEditingController(), a = TextEditingController();
+  @override
+  Widget build(_) => Scaffold(
+        body: Column(children: [
+          TextField(controller: n, decoration: InputDecoration(labelText: "Name")),
+          TextField(controller: a, decoration: InputDecoration(labelText: "Age")),
+          ElevatedButton(onPressed: () => print("${n.text}, ${a.text}"), child: Text("Go"))
+        ]),
+      );
+}
+
+
+7b) Design a form with various input fields and validate the form
+import 'package:flutter/material.dart';
+void main() => runApp(MaterialApp(home: Home()));
+
+class Home extends StatelessWidget {
+  @override
+  Widget build(_) => Scaffold(body: Center(child: SimpleForm()));
+}
+
+class SimpleForm extends StatelessWidget {
+  final key = GlobalKey<FormState>();
+  final name = TextEditingController(), age = TextEditingController();
+
+  @override
+  Widget build(_) => Form(
+        key: key,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+                controller: name,
+                validator: (v) => v!.isEmpty ? "Required" : null),       // ★ added validation
+            TextFormField(
+                controller: age,
+                validator: (v) => int.tryParse(v!) == null ? "Invalid" : null),   // ★ added validation
+            ElevatedButton(
+                onPressed: () => key.currentState!.validate()
+                    ? print("${name.text}, ${age.text}")
+                    : null,
+                child: Text("Submit"))
+          ],
+        ),
+      );
+}
+
+
+
+8.
+ 8 a) Add animations to UI elements using Flutter's animation framework.
+import 'package:flutter/material.dart';
+void main() => runApp(MaterialApp(home: Home()));
+
+class Home extends StatelessWidget {
+  @override
+  Widget build(_) => Scaffold(body: Center(child: AnimBtn()));
+}
+
+class AnimBtn extends StatefulWidget {
+  @override
+  State<AnimBtn> createState() => _AnimBtnState();
+}
+
+class _AnimBtnState extends State<AnimBtn> {
+  bool big = false;  // ★ added
+
+  @override
+  Widget build(_) => AnimatedContainer(          // ★ animation added
+        duration: Duration(milliseconds: 300),
+        width: big ? 200 : 100,
+        child: ElevatedButton(
+          onPressed: () => setState(() => big = !big),
+          child: Text("Press"),
+        ),
+      );
+}
+
+
+
+8 b) Fade Animation
+import 'package:flutter/material.dart';
+void main() => runApp(MaterialApp(home: Home()));
+
+class Home extends StatelessWidget {
+  @override
+  Widget build(_) => Scaffold(body: Center(child: FadeBtn()));
+}
+
+class FadeBtn extends StatefulWidget {
+  @override
+  State<FadeBtn> createState() => _FadeBtnState();
+}
+
+class _FadeBtnState extends State<FadeBtn> with SingleTickerProviderStateMixin {
+  late AnimationController c;            // ★ added
+  @override
+  void initState() {
+    super.initState();
+    c = AnimationController(vsync: this, duration: Duration(milliseconds: 400));
+  }
+
+  @override
+  Widget build(_) => FadeTransition(
+        opacity: c,                       // ★ fade effect added
+        child: ElevatedButton(
+          onPressed: () => c.isCompleted ? c.reverse() : c.forward(),
+          child: Text("Fade"),
+        ),
+      );
+}

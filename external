@@ -304,7 +304,6 @@ class _State extends State<MyApp> {
   @override
   Widget build(BuildContext c) => MaterialApp(
     home: Scaffold(
-      appBar: AppBar(title: Text("setState Example")),
       body: Center(child: Text(value)),
       floatingActionButton:
         FloatingActionButton(onPressed: change, child: Icon(Icons.add)),
@@ -463,19 +462,15 @@ class FadeBtn extends StatefulWidget {
   State<FadeBtn> createState() => _FadeBtnState();
 }
 
-class _FadeBtnState extends State<FadeBtn> with SingleTickerProviderStateMixin {
-  late AnimationController c;            // ★ added
-  @override
-  void initState() {
-    super.initState();
-    c = AnimationController(vsync: this, duration: Duration(milliseconds: 400));
-  }
+class _FadeBtnState extends State<FadeBtn> {
+  double op = 1;   // opacity value
 
   @override
-  Widget build(_) => FadeTransition(
-        opacity: c,                       // ★ fade effect added
+  Widget build(_) => AnimatedOpacity(
+        duration: Duration(milliseconds: 400),
+        opacity: op,
         child: ElevatedButton(
-          onPressed: () => c.isCompleted ? c.reverse() : c.forward(),
+          onPressed: () => setState(() => op = op == 1 ? 0 : 1),
           child: Text("Fade"),
         ),
       );

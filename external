@@ -389,31 +389,42 @@ class Home extends StatelessWidget {
   Widget build(_) => Scaffold(body: Center(child: SimpleForm()));
 }
 
-class SimpleForm extends StatelessWidget {
+class SimpleForm extends StatefulWidget {
+  @override
+  State<SimpleForm> createState() => _SimpleFormState();
+}
+
+class _SimpleFormState extends State<SimpleForm> {
   final key = GlobalKey<FormState>();
   final name = TextEditingController(), age = TextEditingController();
 
   @override
-  Widget build(_) => Form(
+  Widget build(_) =>
+      Form(
         key: key,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextFormField(
                 controller: name,
-                validator: (v) => v!.isEmpty ? "Required" : null),       // ★ added validation
+                validator: (v) => v!.isEmpty ? "Required" : null),
             TextFormField(
                 controller: age,
-                validator: (v) => int.tryParse(v!) == null ? "Invalid" : null),   // ★ added validation
+                validator: (v) =>
+                    int.tryParse(v!) == null ? "Invalid" : null),
             ElevatedButton(
-                onPressed: () => key.currentState!.validate()
-                    ? print("${name.text}, ${age.text}")
-                    : null,
-                child: Text("Submit"))
+              onPressed: () {
+                if (key.currentState!.validate()) {
+                  print("${name.text}, ${age.text}");
+                }
+              },
+              child: Text("Submit"),
+            )
           ],
         ),
       );
 }
+
 
 
 
